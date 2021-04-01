@@ -1,15 +1,21 @@
 const express=require('express');
 const cors=require('cors');
-
+const {dbConexion}=require("../database/config")
 class Server{
     constructor(){
         this.app=express();
         this.usuariosPath='/api/usuarios';
+        //conectar a la base de datos
+        this.conectarDb();
         // middelwares funcion que se ejecuta cuando se levanta el servidor del
         this.middelwares();
         //rutas de mi aplicacion
         this.rutas();
     }
+    async conectarDb(){
+        await dbConexion();
+    }
+    
     middelwares(){
         //cors
         this.app.use(cors());
@@ -28,4 +34,4 @@ class Server{
     }
 }
 
-module.exports =Server;
+module.exports=Server;
